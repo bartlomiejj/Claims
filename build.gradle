@@ -1,0 +1,55 @@
+plugins {
+	id 'java'
+	id 'groovy'
+	id 'org.springframework.boot' version '3.5.0'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.github.ben-manes.versions' version '0.48.0'
+}
+
+bootJar {
+	archiveFileName = 'Claims.jar'
+}
+
+group = 'cv'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.hibernate.orm:hibernate-core:6.0.2.Final'
+	implementation("org.springframework.data:spring-data-jpa:3.5.0")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.5.0")
+	implementation("org.springframework.boot:spring-boot-starter-jdbc:3.5.0")
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.testcontainers:spock:1.21.1'
+	testImplementation 'org.testcontainers:postgresql:1.21.1'
+	testImplementation 'org.testcontainers:testcontainers:1.21.1'
+
+	testImplementation("org.codehaus.groovy:groovy-all:3.0.25")
+	testImplementation 'org.spockframework:spock-core:2.4-M6-groovy-3.0'
+	testImplementation 'org.spockframework:spock-spring:2.4-M6-groovy-3.0'
+	testImplementation("com.blogspot.toomuchcoding:spock-subjects-collaborators-extension:2.0.1-groovy-3.0")
+	testImplementation("org.awaitility:awaitility-groovy:4.2.0")
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
